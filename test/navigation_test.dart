@@ -16,8 +16,8 @@ class MockAIService extends AIService {
     required String petType,
     required String breed,
     required String age,
-    required String symptoms,
-    String? imageUrl,
+    required String symptomDescription,
+    String? imagePath,
   }) async {
     return SymptomAnalysisResult(
       possibleConditions: [],

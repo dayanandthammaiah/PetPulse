@@ -1,12 +1,26 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pet_pulse/features/symptom_checker/services/ai_service.dart';
+import 'package:pet_pulse/features/symptom_checker/services/ai_provider.dart';
+import 'package:pet_pulse/features/symptom_checker/screens/symptom_checker_screen.dart';
+
+class MockAIProvider implements AIProvider {
+  @override
+  Future<SymptomAnalysisResult> analyze({required String prompt, String? imagePath}) async {
+    return SymptomAnalysisResult(
+      possibleConditions: [PossibleCondition(name: "Test Condition", probability: 0.9)],
+      severityScore: "Green",
+      actionRecommendation: "Test Recommendation",
+      shouldSeeVetNow: false,
+    );
+  }
+}
 
 void main() {
   group('AIService Tests', () {
     late AIService aiService;
 
     setUp(() {
-      aiService = AIService();
+      aiService = AIService(provider: MockAIProvider());
     });
 
     test('analyzeSymptoms returns valid result', () async {
@@ -14,18 +28,12 @@ void main() {
         petType: 'Dog',
         breed: 'Labrador',
         age: '5',
-        symptoms: 'Limping on back leg',
+        symptomDescription: 'Limping on back leg',
       );
 
       expect(result, isA<SymptomAnalysisResult>());
       expect(result.possibleConditions, isNotEmpty);
-      expect(result.severityScore, isNotEmpty);
-    });
-
-    test('analyzeSymptoms handles empty symptoms gracefully', () async {
-      // Depending on implementation, this might throw or return a default
-      // For now, we assume it returns a result but with low confidence or specific message
-      // Or we can expect it to throw if validation is added
+      expect(result.severityScore, equals("Green"));
     });
   });
 }

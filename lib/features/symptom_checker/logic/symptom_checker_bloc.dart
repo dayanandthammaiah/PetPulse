@@ -1,12 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:pet_pulse/features/symptom_checker/services/ai_service.dart';
+import 'package:pet_pulse/features/symptom_checker/screens/symptom_checker_screen.dart'; // For SymptomAnalysisResult
 
 // Events
 abstract class SymptomCheckerEvent extends Equatable {
   const SymptomCheckerEvent();
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class AnalyzeSymptoms extends SymptomCheckerEvent {
@@ -14,16 +15,18 @@ class AnalyzeSymptoms extends SymptomCheckerEvent {
   final String petType;
   final String breed;
   final String age;
+  final String? imagePath;
 
   const AnalyzeSymptoms({
     required this.symptomDescription,
     required this.petType,
     required this.breed,
     required this.age,
+    this.imagePath,
   });
 
   @override
-  List<Object> get props => [symptomDescription, petType, breed, age];
+  List<Object?> get props => [symptomDescription, petType, breed, age, imagePath];
 }
 
 // States
@@ -69,7 +72,8 @@ class SymptomCheckerBloc extends Bloc<SymptomCheckerEvent, SymptomCheckerState> 
         petType: event.petType,
         breed: event.breed,
         age: event.age,
-        symptoms: event.symptomDescription,
+        symptomDescription: event.symptomDescription,
+        imagePath: event.imagePath,
       );
       emit(SymptomCheckerSuccess(result));
     } catch (e) {
