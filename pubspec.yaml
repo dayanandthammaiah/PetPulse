@@ -15,10 +15,10 @@ dependencies:
   equatable: ^2.0.5
   
   # Firebase
-  firebase_core: ^2.27.0
-  cloud_firestore: ^4.15.8
-  firebase_auth: ^4.17.8
-  firebase_storage: ^11.6.9
+  firebase_core: ^2.32.0
+  cloud_firestore: ^4.17.5
+  firebase_auth: ^4.20.0
+  firebase_storage: ^11.7.7
   
   # AI & ML
   google_ml_kit: ^0.16.0 # Wrapper for ML Kit
